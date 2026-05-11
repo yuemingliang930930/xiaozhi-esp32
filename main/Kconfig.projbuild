@@ -2,7 +2,8 @@ menu "Xiaozhi Assistant"
 
 config OTA_URL
     string "Default OTA URL"
-    default "https://api.tenclass.net/xiaozhi/ota/"
+    # 默认 OTA 地址改为本地服务，便于局域网内调试和升级
+    default "http://192.168.180.147:8080/ota"
     help
         The application will access this URL to check for new firmwares and server address.
 

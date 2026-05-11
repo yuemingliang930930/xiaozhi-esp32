@@ -44,12 +44,16 @@ Ota::~Ota() {
 }
 
 std::string Ota::GetCheckVersionUrl() {
-    Settings settings("wifi", false);
-    std::string url = settings.GetString("ota_url");
-    if (url.empty()) {
-        url = CONFIG_OTA_URL;
+    // 强制优先使用当前固件内置的 OTA 地址，并同步覆盖设备里遗留的旧配置
+    const std::string configured_url = CONFIG_OTA_URL;
+    Settings read_settings("wifi", false);
+    std::string stored_url = read_settings.GetString("ota_url");
+    if (!stored_url.empty() && stored_url != configured_url) {
+        ESP_LOGW(TAG, "Stored OTA URL is outdated, overriding %s -> %s", stored_url.c_str(), configured_url.c_str());
+        Settings write_settings("wifi", true);
+        write_settings.SetString("ota_url", configured_url);
     }
-    return url;
+    return configured_url;
 }
 
 std::unique_ptr<Http> Ota::SetupHttp() {

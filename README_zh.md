@@ -108,7 +108,7 @@ v1 的稳定版本为 1.9.2，可以通过 `git checkout v1` 来切换到 v1 版
 
 新手第一次操作建议先不要搭建开发环境，直接使用免开发环境烧录的固件。
 
-固件默认接入 [xiaozhi.me](https://xiaozhi.me) 官方服务器，个人用户注册账号可以免费使用 Qwen 实时模型。
+固件默认使用本地 OTA 地址 `http://192.168.180.147:8080/ota` 进行固件与服务器地址发现。
 
 👉 [新手烧录固件教程](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
 
