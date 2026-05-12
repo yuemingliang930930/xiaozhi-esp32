@@ -18,3 +18,14 @@ main/mmap_generate_emoji.h
 *.bin
 mmap_generate_*.h
 .clangd
+.idea/.gitignore
+.idea/.name
+.gitignore
+.idea/editor.xml
+.idea/espidf_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/xiaozhi-esp32.iml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml

@@ -108,7 +108,7 @@ Breadboard demo:
 
 For beginners, it is recommended to use the firmware that can be flashed without setting up a development environment.
 
-The firmware uses the local OTA endpoint `http://192.168.180.147:8080/ota` by default for firmware and server discovery.
+The firmware uses the local OTA endpoint `http://192.168.180.147:8003/xiaozhi/ota/` by default for firmware and server discovery.
 
 👉 [Beginner's Firmware Flashing Guide](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
 

@@ -598,7 +598,7 @@ CONFIG_PARTITION_TABLE_MD5=y
 # Xiaozhi Assistant
 #
 # 默认 OTA 地址改为本地服务，避免该板级配置继续覆盖全局默认值
-CONFIG_OTA_URL="http://192.168.180.147:8080/ota"
+CONFIG_OTA_URL="http://192.168.180.147:8003/xiaozhi/ota/"
 # CONFIG_FLASH_NONE_ASSETS is not set
 CONFIG_FLASH_DEFAULT_ASSETS=y
 # CONFIG_FLASH_CUSTOM_ASSETS is not set
