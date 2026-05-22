@@ -798,7 +798,11 @@ void Blufi::_handle_event(esp_blufi_cb_event_t event, esp_blufi_cb_param_t* para
                         ESP_LOGI(BLUFI_TAG, "connected to WiFi");
 
                         if (self->m_ble_is_connected) {
-                            esp_blufi_disconnect();
+                            // Keep the BLE link open after reporting success so the mini
+                            // program can reliably receive the success state and decide when
+                            // to close the provisioning session.
+                            ESP_LOGI(BLUFI_TAG,
+                                     "WiFi success reported, waiting for the client to close BLE");
                         }
                     } else {
                         self->m_sta_is_connecting = false;

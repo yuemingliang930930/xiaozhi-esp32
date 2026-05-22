@@ -108,7 +108,11 @@ v1 的稳定版本为 1.9.2，可以通过 `git checkout v1` 来切换到 v1 版
 
 新手第一次操作建议先不要搭建开发环境，直接使用免开发环境烧录的固件。
 
-固件默认使用本地 OTA 地址 `http://192.168.180.147:8003/xiaozhi/ota/` 进行固件与服务器地址发现。
+固件默认使用本地 OTA 地址 `http://192.168.180.234:8003/xiaozhi/ota/` 进行固件与服务器地址发现。
+当前工程配置已切换为 BluFi 配网，不再使用热点配网，蓝牙广播名通常为 `Xiaozhi-Blufi`。
+`bread-compact-wifi` 板型支持长按 `BOOT` 清空 NVS 并重启设备，这会删除已保存的 WiFi 和 OTA 持久化配置。
+BluFi 配网成功后，固件现在会保持 BLE 连接，由小程序端在收到成功状态后自行结束会话，这样更容易稳定收到配网成功结果。
+当设备成功连上 WiFi 后，`WifiBoard` 也会再延迟约 2 秒释放 BluFi 资源，避免过早断开导致小程序收不到最终成功状态。
 
 👉 [新手烧录固件教程](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
 

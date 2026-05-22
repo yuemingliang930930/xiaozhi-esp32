@@ -109,8 +109,13 @@ void WifiBoard::OnNetworkEvent(NetworkEvent event, const std::string& data) {
             // Stop timeout timer
             esp_timer_stop(connect_timer_);
 #ifdef CONFIG_USE_ESP_BLUFI_WIFI_PROVISIONING
-            // make sure blufi resources has been released
-            Blufi::GetInstance().deinit();
+            // Delay BluFi teardown slightly so the mobile client has time to receive
+            // the final success status before BLE is closed by the firmware side.
+            xTaskCreate([](void* arg) {
+                vTaskDelay(pdMS_TO_TICKS(2000));
+                Blufi::GetInstance().deinit();
+                vTaskDelete(nullptr);
+            }, "blufi_deinit_delay", 4096, nullptr, 5, nullptr);
 #endif
             in_config_mode_ = false;
             ESP_LOGI(TAG, "Connected to WiFi: %s", data.c_str());

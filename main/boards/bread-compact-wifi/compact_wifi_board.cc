@@ -11,6 +11,8 @@
 #include "assets/lang_config.h"
 
 #include <esp_log.h>
+#include <nvs_flash.h>
+#include <esp_system.h>
 #include <driver/i2c_master.h>
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_panel_vendor.h>
@@ -31,6 +33,23 @@ private:
     Button touch_button_;
     Button volume_up_button_;
     Button volume_down_button_;
+
+    // 长按 BOOT 时清空 NVS，删除已保存的 WiFi 和 OTA 持久化配置
+    void ResetStoredSettings() {
+        ESP_LOGI(TAG, "BOOT long press detected, resetting NVS flash");
+        esp_err_t ret = nvs_flash_erase();
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "Failed to erase NVS flash: %s", esp_err_to_name(ret));
+            return;
+        }
+        ret = nvs_flash_init();
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "Failed to reinitialize NVS flash: %s", esp_err_to_name(ret));
+            return;
+        }
+        ESP_LOGI(TAG, "NVS flash reset complete, restarting");
+        esp_restart();
+    }
 
     void InitializeDisplayI2c() {
         i2c_master_bus_config_t bus_config = {
@@ -108,6 +127,10 @@ private:
                 return;
             }
             app.ToggleChatState();
+        });
+        // 长按 BOOT 用于清空 NVS，忘记 WiFi 和 OTA 持久化配置
+        boot_button_.OnLongPress([this]() {
+            ResetStoredSettings();
         });
         touch_button_.OnPressDown([this]() {
             Application::GetInstance().StartListening();

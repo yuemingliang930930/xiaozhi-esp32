@@ -108,7 +108,11 @@ Breadboard demo:
 
 For beginners, it is recommended to use the firmware that can be flashed without setting up a development environment.
 
-The firmware uses the local OTA endpoint `http://192.168.180.147:8003/xiaozhi/ota/` by default for firmware and server discovery.
+The firmware uses the local OTA endpoint `http://192.168.180.234:8003/xiaozhi/ota/` by default for firmware and server discovery.
+The current project configuration uses BluFi provisioning instead of hotspot provisioning, and the BLE device name is typically `Xiaozhi-Blufi`.
+On `bread-compact-wifi`, long-pressing `BOOT` clears NVS and restarts the device, which removes saved WiFi and OTA persistent settings.
+After BluFi provisioning succeeds, the firmware now keeps the BLE link open and waits for the client app to close the session, so the app has time to receive the success status reliably.
+When the device finishes joining WiFi, `WifiBoard` also delays BluFi resource teardown for about 2 seconds to avoid cutting off the final success notification too early.
 
 👉 [Beginner's Firmware Flashing Guide](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
 
